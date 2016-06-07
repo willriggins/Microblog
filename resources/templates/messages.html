@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>Really Great Messages, Probably the Best</title>
+</head>
+<body>
+<form action="/create-message" method="post">
+    <input type="text" name="message" placeholder="Write a message" />
+    <button type="submit">Submit</button>
+</form>
+<h1>Messages by {{name}}:</h1>
+<ol>
+    {{#messages}}
+    <li>{{message}}</li>
+    {{/messages}}
+</ol>
+</body>
+</html>
