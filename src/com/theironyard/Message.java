@@ -5,6 +5,7 @@ package com.theironyard;
  */
 public class Message {
     String content;
+    int id;
 
     public Message(String content) {
         this.content = content;

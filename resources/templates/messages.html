@@ -20,13 +20,17 @@
     {{#messages}}
     <li>
         {{content}}
-    </li> <!-- this field in {{___}} needs to match the field from the class -->
+        <form action="/delete-message" method="post" style="display: inline-block;">
+            <input type="hidden" name="id" value="{{id}}"/>
+            <button type="submit">Delete</button>
+            </form>
+                </li> <!-- this field in {{___}} needs to match the field from the class -->
     {{/messages}}
 </ol>
-<form action="/delete-message" method="post">
-    <input type="number" name="id" placeholder="#"/>
-    <button type="submit">Delete Message</button>
-</form>
+<!--<form action="/delete-message" method="post">-->
+    <!--<input type="number" name="id" placeholder="#"/>-->
+    <!--<button type="submit">Delete Message</button>-->
+<!--</form>-->
 <br><br>
 <form action="/edit-message" method="post">
     <input type="number" name="editid" placeholder="#"/>

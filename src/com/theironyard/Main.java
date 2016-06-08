@@ -1,18 +1,29 @@
 package com.theironyard;
 
+import jodd.json.JsonParser;
+import jodd.json.JsonSerializer;
 import spark.ModelAndView;
 import spark.Session;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
 
     static HashMap<String, User> users = new HashMap<>();
+    static final String SAVE_FILE = "data.json";
+    static HashMap jsonData;
 
 
     public static void main(String[] args) {
+//        jsonData = load(SAVE_FILE);
+
         Spark.staticFileLocation("public");
         Spark.init();
         Spark.get(
@@ -20,12 +31,20 @@ public class Main {
                 (request, response) -> {
                     Session session = request.session();
                     String username = session.attribute("username");
+
+                    User user = users.get(username);
+
                     HashMap m = new HashMap();
                     if (username == null) {
                         return new ModelAndView(m, "index.html");
                     }
                     else {
-                        User user = users.get(username);
+                        int id = 1;
+                        for (Message msg: user.messages) {
+                            msg.id = id;
+                            id++;
+                        }
+//                        User user = users.get(username);
                         m.put("name", user.name);
                         m.put("messages", user.messages); // the key here must line up with the {{#____}} field
                         return new ModelAndView(m, "messages.html");
@@ -52,6 +71,9 @@ public class Main {
 
                     Session session = request.session();
                     session.attribute("username", username);
+
+//                    jsonData.put("list", username);
+//                    save(jsonData, SAVE_FILE);
 
                     response.redirect("/");
                     return "";
@@ -126,4 +148,36 @@ public class Main {
                 }
         );
     }
+
+//    public static HashMap load(String filename) {
+//        File f = new File(filename);
+//
+//        try {
+//            Scanner scanner = new Scanner(f);
+//            scanner.useDelimiter("\\Z");
+//            String contents = scanner.next();
+//            JsonParser parser = new JsonParser();
+//            return parser.parse(contents);
+//
+//        }
+//        catch (FileNotFoundException e) {
+//        }
+//        return null;
+//    }
+
+//    public static void save(HashMap jsonData, String filename) {
+//        File f = new File(filename);
+//        JsonSerializer serializer = new JsonSerializer();
+//        String json = serializer.serialize(jsonData);
+//
+//        try {
+//            FileWriter fw = new FileWriter(f);
+//            fw.write(json);
+//            fw.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 }
