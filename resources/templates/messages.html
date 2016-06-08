@@ -1,17 +1,37 @@
+<!DOCTYPE html>
 <html>
 <head>
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <title>Really Great Messages, Probably the Best</title>
 </head>
 <body>
+<form action="/logout" method="post">
+    <div id="sign">
+        <button type="submit">Log out</button> - Signed in as <b>{{name}}</b>
+    </div>
+    <br>
+</form>
 <form action="/create-message" method="post">
-    <input type="text" name="message" placeholder="Write a message" />
+    <input type="text" name="message" placeholder="Write a message" size="75"/>
     <button type="submit">Submit</button>
 </form>
-<h1>Messages by {{name}}:</h1>
+<h1>Messages about Universe Cats</h1>
 <ol>
     {{#messages}}
-    <li>{{message}}</li>
+    <li>
+        {{content}}
+    </li> <!-- this field in {{___}} needs to match the field from the class -->
     {{/messages}}
 </ol>
+<form action="/delete-message" method="post">
+    <input type="number" name="id" placeholder="#"/>
+    <button type="submit">Delete Message</button>
+</form>
+<br><br>
+<form action="/edit-message" method="post">
+    <input type="number" name="editid" placeholder="#"/>
+    <input type="text" name="edit" placeholder="Edit Message" />
+    <button type="submit">Edit Message</button>
+</form>
 </body>
 </html>

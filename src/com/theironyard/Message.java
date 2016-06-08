@@ -4,16 +4,16 @@ package com.theironyard;
  * Created by will on 6/6/16.
  */
 public class Message {
-    static String content;
+    String content;
 
     public Message(String content) {
         this.content = content;
     }
-
-    @Override
-    public String toString() {
-        return content;
-    }
+//
+//    @Override
+//    public String toString() {
+//        return content;
+//    }
 
 }
 
